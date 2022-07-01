@@ -1,0 +1,4 @@
+#!/usr/bin/env
+export WORKSPACE="${HOME}/APTOS/testnet"
+export DNSNAME="aptos-validator-00.roomit.xyz"
+export NODENAME="aptos-roomit"
