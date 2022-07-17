@@ -1,4 +1,8 @@
 #!/bin/bash
+#
+#
+# Installation node aptos ait2
+#
 source environment
 
 mkdir -p $WORKSPACE
