@@ -1,5 +1,5 @@
 [Unit]
-Description=aptos container
+Description=aptos-validator container
 Requires=docker.service
 After=docker.service
 

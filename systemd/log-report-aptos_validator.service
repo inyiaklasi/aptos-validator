@@ -1,0 +1,15 @@
+[Unit]
+Description=Script Notify Error in Logs
+After=network.target
+
+[Service]
+Type=simple
+User=gneareth
+Group=gneareth
+Restart=on-failure
+RestartSec=3
+ExecStart=/usr/bin/screen -L -DmS pi /bin/bash -x /home/gneareth/APTOS/monitoring/restart-sync
+
+[Install]
+WantedBy=multi-user.target
+
