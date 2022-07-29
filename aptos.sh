@@ -1,26 +1,18 @@
 #!/bin/bash
-#
-#
-# Installation node aptos ait2
-#
 source environment
+
+OPTIONS=$1
+BUILD=$2
 
 mkdir -p $WORKSPACE
 cd $WORKSPACE
 
-if ! [ -f docker-compose.yaml ]
-then	
-# Original File Download
-# wget https://raw.githubusercontent.com/aptos-labs/aptos-core/main/docker/compose/aptos-node/docker-compose.yaml
-# We Only Modified container_name
-cp ../docker-compose.yaml .
-fi
 
-if ! [ -f validator.yaml ]
-then
-wget https://raw.githubusercontent.com/aptos-labs/aptos-core/main/docker/compose/aptos-node/validator.yaml
-fi
+function help(){
+   echo "aptos.sh deploy [ait2|devnet]"
+}
 
+function aptos:client(){
 if ! [ -f /usr/bin/aptos ]
 then
  wget -qO aptos-cli.zip https://github.com/aptos-labs/aptos-core/releases/download/aptos-cli-0.2.0/aptos-cli-0.2.0-Ubuntu-x86_64.zip
@@ -28,6 +20,21 @@ then
  sudo chmod +x /usr/bin/aptos
  rm aptos-cli.zip
 fi
+}
+
+function deploy:ait2(){
+if ! [ -f docker-compose.yaml ]
+then	
+  wget https://raw.githubusercontent.com/aptos-labs/aptos-core/main/docker/compose/aptos-node/docker-compose.yaml
+else
+   echo "no avaialable"
+fi
+
+if ! [ -f validator.yaml ]
+then
+  wget https://raw.githubusercontent.com/aptos-labs/aptos-core/main/docker/compose/aptos-node/validator.yaml
+fi
+
 
 if ! [ -f "${WORKSPACE}/private-keys.yaml" ] && ! [ -f "${WORKSPACE}/validator-identity.yaml" ] && ! [ -f "${WORKSPACE}/validator-full-node-identity.yaml" ]
 then
@@ -82,3 +89,57 @@ then
 fi
 
 docker compose up -d
+}
+
+function deploy:devnet(){
+if ! [ -f docker-compose.yaml ]
+then
+   wget https://raw.githubusercontent.com/aptos-labs/aptos-core/main/docker/compose/public_full_node/docker-compose.yaml
+else
+   echo "no avaialable"
+fi
+
+if ! [ -f public_full_node.yaml ]
+then
+   wget https://raw.githubusercontent.com/aptos-labs/aptos-core/main/docker/compose/public_full_node/public_full_node.yaml
+else
+   echo "no avaialable"
+fi
+
+if ! [ -f genesis.blob ]
+then
+   wget https://devnet.aptoslabs.com/genesis.blob
+else
+   echo "no avaialable"
+fi
+
+if ! [ -f waypoint.txt ]
+then
+   wget https://devnet.aptoslabs.com/waypoint.txt
+else
+   echo "no avaialable"
+fi
+docker-compose up
+}
+
+
+case $OPTIONS in
+   deploy|dep|apply)
+	   case $BUILD in
+	      ait2)
+	      aptos:client;
+	      deploy:ait2;
+	      ;;
+              devnet)
+	      aptos:client;
+	      deploy:devnet;
+	      ;;
+              *)
+	      help;
+	      ;;
+           esac
+   ;;
+   *)
+           help;
+   ;;
+esac
