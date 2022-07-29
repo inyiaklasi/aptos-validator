@@ -1,4 +1,5 @@
 #!/usr/bin/env
-export WORKSPACE="${HOME}/APTOS/testnet"
+export BUILD="devnet"
+export WORKSPACE="${HOME}/APTOS/${BUILD}"
 export DNSNAME=""
 export NODENAME=""
