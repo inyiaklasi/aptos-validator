@@ -119,7 +119,7 @@ then
 else
    echo "no avaialable"
 fi
-docker-compose up
+docker-compose up -d
 }
 
 
