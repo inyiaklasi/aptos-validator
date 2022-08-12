@@ -3,22 +3,27 @@ source environment
 
 OPTIONS=$1
 BUILD=$2
+docker_compose="file"
 
 mkdir -p $WORKSPACE
 cd $WORKSPACE
 
 
 function help(){
+   echo "DEPLOY APTOS"
    echo "aptos.sh deploy [ait2|devnet]"
+   echo ""
+   echo "aptosh.sh update client"
 }
 
 function aptos:client(){
 if ! [ -f /usr/bin/aptos ]
 then
- wget -qO aptos-cli.zip https://github.com/aptos-labs/aptos-core/releases/download/aptos-cli-0.2.0/aptos-cli-0.2.0-Ubuntu-x86_64.zip
+ wget -qO aptos-cli.zip https://github.com/aptos-labs/aptos-core/releases/download/aptos-cli-v0.2.5/aptos-cli-0.2.5-Ubuntu-x86_64.zip
  sudo unzip -o aptos-cli.zip -d /usr/bin
  sudo chmod +x /usr/bin/aptos
  rm aptos-cli.zip
+ aptos -V
 fi
 }
 
@@ -92,12 +97,50 @@ docker compose up -d
 }
 
 function deploy:devnet(){
-if ! [ -f docker-compose.yaml ]
+if [ ${docker_compose} == "file" ]
 then
-   wget https://raw.githubusercontent.com/aptos-labs/aptos-core/main/docker/compose/public_full_node/docker-compose.yaml
+cat > docker-compose.yaml <<EOF
+version: "3.8"
+services:
+  fullnode:
+    image: aptoslabs/validator:devnet_1a56a55c6c149ccc8d6a38903e42e9626fb10b06
+    container_name: aptos-devnet-validator
+    restart: on-failure
+    working_dir: /opt/aptos/etc
+    volumes:
+      - type: volume
+        source: db
+        target: /opt/aptos/data
+      - type: bind
+        source: ./genesis.blob
+        target: /opt/aptos/etc/genesis.blob
+        read_only: true
+      - type: bind
+        source: ./public_full_node.yaml
+        target: /opt/aptos/etc/node.yaml
+        read_only: true
+      - type: bind
+        source: ./waypoint.txt
+        target: /opt/aptos/etc/waypoint.txt
+        read_only: true
+    command: ["/usr/local/bin/aptos-node", "-f", "/opt/aptos/etc/node.yaml"]
+    ports:
+      - "8080:8080"
+      - "6180:6180"
+      - "9101:9101"
+
+volumes:
+  db:
+EOF
 else
-   echo "no avaialable"
+    if ! [ -f docker-compose.yaml ]
+    then
+       wget https://raw.githubusercontent.com/aptos-labs/aptos-core/main/docker/compose/public_full_node/docker-compose.yaml
+    else
+       echo "no avaialable"
+    fi
 fi
+
 
 if ! [ -f public_full_node.yaml ]
 then
@@ -119,12 +162,12 @@ then
 else
    echo "no avaialable"
 fi
-docker-compose up -d
+docker-compose up
 }
 
 
 case $OPTIONS in
-   deploy|dep|apply)
+   deploy|dep|apply|--deploy)
 	   case $BUILD in
 	      ait2)
 	      aptos:client;
@@ -137,6 +180,17 @@ case $OPTIONS in
               *)
 	      help;
 	      ;;
+           esac
+   ;;
+   update|--update)
+	   case ${BUILD} in
+           apots-client|client|--client)
+           sudo rm -rf /usr/bin/aptos
+           aptos:client;
+	   ;;
+           *)
+           help;
+	   ;;
            esac
    ;;
    *)
