@@ -11,3 +11,8 @@ bash -x aptos.sh deploy ait2
 ```
 bash -x aptos.sh deploy devnet
 ```
+
+## Update Aptos CLI
+```
+bash aptosh.sh update client
+```
