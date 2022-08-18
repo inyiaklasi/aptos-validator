@@ -11,7 +11,7 @@ cd $WORKSPACE
 
 function help(){
    echo "DEPLOY APTOS"
-   echo "aptos.sh deploy [ait2|devnet]"
+   echo "aptos.sh deploy [ait2|devnet|testnet]"
    echo ""
    echo "aptosh.sh update client"
 }
@@ -19,12 +19,47 @@ function help(){
 function aptos:client(){
 if ! [ -f /usr/bin/aptos ]
 then
- wget -qO aptos-cli.zip https://github.com/aptos-labs/aptos-core/releases/download/aptos-cli-v0.2.5/aptos-cli-0.2.5-Ubuntu-x86_64.zip
+ wget -qO aptos-cli.zip https://github.com/aptos-labs/aptos-core/releases/download/aptos-cli-v0.3.0/aptos-cli-0.3.0-Ubuntu-x86_64.zip
  sudo unzip -o aptos-cli.zip -d /usr/bin
  sudo chmod +x /usr/bin/aptos
  rm aptos-cli.zip
  aptos -V
 fi
+}
+
+function deploy:testnet(){
+mkdir -p ${WORKSPACE}/keys
+if ! [ -f docker-compose.yaml ]
+then	
+   wget https://raw.githubusercontent.com/aptos-labs/aptos-core/main/docker/compose/aptos-node/docker-compose.yaml
+else
+   echo "avaialable"
+fi
+if ! [ -f validator.yaml ]
+then
+   wget https://raw.githubusercontent.com/aptos-labs/aptos-core/main/docker/compose/aptos-node/validator.yaml
+fi
+
+if ! [ -f "${WORKSPACE}/keys/public-keys.yaml" ] && ! [ -f "${WORKSPACE}/keys/private-keys.yaml" ] && ! [ -f "${WORKSPACE}/keys/validator-identity.yaml" ] && ! [ -f "${WORKSPACE}/keys/validator-full-node-identity.yaml" ]
+then
+   aptos genesis generate-keys --output-dir $WORKSPACE/keys
+fi
+
+if ! [ -f "${WORKSPACE}/${NODENAME}.yaml" ]
+then	
+mkdir -p $WORKSPACE/keys/
+aptos genesis set-validator-configuration \
+    --local-repository-dir $WORKSPACE \
+    --username $NODENAME \
+    --owner-public-identity-file $WORKSPACE/keys/public-keys.yaml \
+    --validator-host cikuray.roomit.xyz:6180 \
+    --stake-amount 100000000000000
+fi
+
+aptos genesis generate-layout-template --output-file $WORKSPACE/layout.yaml
+
+curl https://raw.githubusercontent.com/aptos-labs/aptos-core/testnet/aptos-move/framework/releases/head.mrb --output framework.mrb
+#aptos genesis generate-genesis --local-repository-dir $WORKSPACE --output-dir $WORKSPACE
 }
 
 function deploy:ait2(){
@@ -176,6 +211,10 @@ case $OPTIONS in
               devnet)
 	      aptos:client;
 	      deploy:devnet;
+	      ;;
+              testnet)
+              aptos:client;
+	      deploy:testnet;
 	      ;;
               *)
 	      help;
