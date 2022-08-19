@@ -42,7 +42,16 @@ fi
 
 if ! [ -f "${WORKSPACE}/keys/public-keys.yaml" ] && ! [ -f "${WORKSPACE}/keys/private-keys.yaml" ] && ! [ -f "${WORKSPACE}/keys/validator-identity.yaml" ] && ! [ -f "${WORKSPACE}/keys/validator-full-node-identity.yaml" ]
 then
-   aptos genesis generate-keys --output-dir $WORKSPACE/keys
+   aptos_client_version=`aptos --version | awk '{print $2}'`
+   if [ ${aptos_client_version} != "0.3.0" ]
+   then
+	  echo "make sure your aptos client tools have 0.3.0  version"
+   elif [ ${aptos_client_version} == "" ] or [ -z ${aptos_client_version} ] 
+   then
+         aptos:client;
+   else
+	 aptos genesis generate-keys --output-dir $WORKSPACE/keys
+   fi
 fi
 
 if ! [ -f "${WORKSPACE}/${NODENAME}.yaml" ]
