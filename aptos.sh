@@ -46,6 +46,7 @@ then
    if [ ${aptos_client_version} != "0.3.0" ]
    then
 	  echo "make sure your aptos client tools have 0.3.0  version"
+	  exit 1;
    elif [ ${aptos_client_version} == "" ] or [ -z ${aptos_client_version} ] 
    then
          aptos:client;
@@ -65,8 +66,12 @@ aptos genesis set-validator-configuration \
     --stake-amount 100000000000000
 fi
 
-aptos genesis generate-layout-template --output-file $WORKSPACE/layout.yaml
-
+if ! [ -f $WORKSPACE/layout.yaml ]
+then
+  aptos genesis generate-layout-template --output-file $WORKSPACE/layout.yaml
+else
+  echo "File layout.yaml from generation generate-layout-template available"
+fi 
 curl https://raw.githubusercontent.com/aptos-labs/aptos-core/testnet/aptos-move/framework/releases/head.mrb --output framework.mrb
 #aptos genesis generate-genesis --local-repository-dir $WORKSPACE --output-dir $WORKSPACE
 }
@@ -245,3 +250,4 @@ case $OPTIONS in
            help;
    ;;
 esac
+
