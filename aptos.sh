@@ -5,6 +5,7 @@ OPTIONS=$1
 BUILD=$2
 docker_compose="file"
 aptos_version_cli="0.3.0"
+aptos_version_check=`aptos --version | awk '{print $2}'`
 
 mkdir -p $WORKSPACE
 cd $WORKSPACE
@@ -29,6 +30,17 @@ fi
 }
 
 function deploy:testnet(){
+if [ ${aptos_version_check} != "0.3.0" ] || [ ${aptos_version_check} == "" ] || [ -z ${aptos_version_check} ]
+then
+          echo "make sure your aptos client tools have 0.3.0  version"
+	  echo "install aptos client with:"
+	  echo "bash -x aptos.sh update client"
+          exit 1;
+else
+         aptos:client;
+fi
+
+
 mkdir -p ${WORKSPACE}/keys
 if ! [ -f docker-compose.yaml ]
 then	
@@ -43,12 +55,11 @@ fi
 
 if ! [ -f "${WORKSPACE}/keys/public-keys.yaml" ] && ! [ -f "${WORKSPACE}/keys/private-keys.yaml" ] && ! [ -f "${WORKSPACE}/keys/validator-identity.yaml" ] && ! [ -f "${WORKSPACE}/keys/validator-full-node-identity.yaml" ]
 then
-   aptos_client_version=`aptos --version | awk '{print $2}'`
-   if [ ${aptos_client_version} != "0.3.0" ]
+   if [ ${aptos_version_check} != "0.3.0" ]
    then
 	  echo "make sure your aptos client tools have 0.3.0  version"
 	  exit 1;
-   elif [ ${aptos_client_version} == "" ] or [ -z ${aptos_client_version} ] 
+   elif [ ${aptos_version_check} == "" ] or [ -z ${aptos_version_check} ] 
    then
          aptos:client;
    else
