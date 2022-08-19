@@ -58,10 +58,10 @@ fi
 
 if ! [ -f "${WORKSPACE}/${NODENAME}.yaml" ]
 then	
-mkdir -p $WORKSPACE/keys/
+mkdir -p ${WORKSPACE}/keys/
 aptos genesis set-validator-configuration \
     --local-repository-dir $WORKSPACE \
-    --username $NODENAME \
+    --username ${NODENAME} \
     --owner-public-identity-file $WORKSPACE/keys/public-keys.yaml \
     --validator-host ${DNSNAME}:6180 \
     --stake-amount 100000000000000
@@ -69,12 +69,44 @@ fi
 
 if ! [ -f $WORKSPACE/layout.yaml ]
 then
-  aptos genesis generate-layout-template --output-file $WORKSPACE/layout.yaml
+aptos genesis generate-layout-template --output-file $WORKSPACE/layout.yaml
+#cat > $WORKSPACE/layout.yaml <<EOF
+#root_key: "D04470F43AB6AEAA4EB616B72128881EEF77346F2075FFE68E14BA7DEBD8095E"
+#users: ["${NODENAME}"]
+#chain_id: 43
+#allow_new_validators: false
+#epoch_duration_secs: 7200
+#is_test: true
+#min_stake: 100000000000000
+#min_voting_threshold: 100000000000000
+#max_stake: 100000000000000000
+#recurring_lockup_duration_secs: 86400
+#required_proposer_stake: 100000000000000
+#rewards_apy_percentage: 10
+#voting_duration_secs: 43200
+#voting_power_increase_limit: 20
+#EOF
 else
   echo "File layout.yaml from generation generate-layout-template available"
 fi 
-curl https://raw.githubusercontent.com/aptos-labs/aptos-core/testnet/aptos-move/framework/releases/head.mrb --output framework.mrb
-#aptos genesis generate-genesis --local-repository-dir $WORKSPACE --output-dir $WORKSPACE
+
+
+if ! [ -f ${WORKSPACE}/framework.mrb ]
+then
+   curl https://raw.githubusercontent.com/aptos-labs/aptos-core/testnet/aptos-move/framework/releases/head.mrb --output framework.mrb
+else
+   echo "File framework.mrb Available"
+fi
+
+if ! [ -f ${WORKSPACE}/genesis.blob ] || ! [ -f ${WORKSPACE}/waypoint.txt ]
+then
+   rm ${WORKSPACE}/genesis.blob 2> /dev/nul
+   rm ${WORKSPACE}/waypoint.txt 2> /dev/nul
+   aptos genesis generate-genesis --local-repository-dir $WORKSPACE --output-dir $WORKSPACE
+else
+   echo "Genesis File waypoint.txt and genesis.blob already exist"
+fi
+docker-compose up -d
 }
 
 function deploy:ait2(){
@@ -212,7 +244,7 @@ then
 else
    echo "no avaialable"
 fi
-docker-compose up
+docker-compose up -d 
 }
 
 
