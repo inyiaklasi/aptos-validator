@@ -1,5 +1,11 @@
 # aptos-validator
 
+## Requierment
+```
+Ubuntu 22^
+VPS 8vcpu 16GB 250GB
+```
+
 ## Install Environment
 ```
 git clone git@github.com:luneareth/aptos-validator.git
