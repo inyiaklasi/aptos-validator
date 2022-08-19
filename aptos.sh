@@ -4,6 +4,7 @@ source environment
 OPTIONS=$1
 BUILD=$2
 docker_compose="file"
+aptos_version_cli="0.3.0"
 
 mkdir -p $WORKSPACE
 cd $WORKSPACE
@@ -19,7 +20,7 @@ function help(){
 function aptos:client(){
 if ! [ -f /usr/bin/aptos ]
 then
- wget -qO aptos-cli.zip https://github.com/aptos-labs/aptos-core/releases/download/aptos-cli-v0.3.0/aptos-cli-0.3.0-Ubuntu-x86_64.zip
+ wget -qO aptos-cli.zip https://github.com/aptos-labs/aptos-core/releases/download/aptos-cli-v${aptos_version_cli}/aptos-cli-${aptos_version_cli}-Ubuntu-x86_64.zip
  sudo unzip -o aptos-cli.zip -d /usr/bin
  sudo chmod +x /usr/bin/aptos
  rm aptos-cli.zip
@@ -62,7 +63,7 @@ aptos genesis set-validator-configuration \
     --local-repository-dir $WORKSPACE \
     --username $NODENAME \
     --owner-public-identity-file $WORKSPACE/keys/public-keys.yaml \
-    --validator-host cikuray.roomit.xyz:6180 \
+    --validator-host ${DNSNAME}:6180 \
     --stake-amount 100000000000000
 fi
 
@@ -250,4 +251,3 @@ case $OPTIONS in
            help;
    ;;
 esac
-
