@@ -4,6 +4,7 @@
 ```
 Ubuntu 22^
 VPS 8vcpu 16GB 250GB
+Used DNS 
 ```
 
 ## Install Environment
