@@ -34,7 +34,7 @@ function deploy:testnet(){
 
 mkdir -p ${WORKSPACE}/keys
 if ! [ -f docker-compose.yaml ]
-then	
+then
    wget https://raw.githubusercontent.com/aptos-labs/aptos-core/main/docker/compose/aptos-node/docker-compose.yaml
 else
    echo "avaialable"
@@ -48,18 +48,18 @@ if ! [ -f "${WORKSPACE}/keys/public-keys.yaml" ] && ! [ -f "${WORKSPACE}/keys/pr
 then
    if [ ${aptos_version_check} == "0.3.1" ]
    then
-	   aptos genesis generate-keys --output-dir $WORKSPACE/keys
+           aptos genesis generate-keys --output-dir $WORKSPACE/keys
    elif [ ${aptos_version_check} == "" ] or [ -z ${aptos_version_check} ] 
    then
          aptos:client;
    else
-	  echo "make sure your aptos client tools have 0.3.0  version"
-	  exit 1;
+          echo "make sure your aptos client tools have 0.3.0  version"
+          exit 1;
    fi
 fi
 
 if ! [ -f "${WORKSPACE}/${NODENAME}.yaml" ]
-then	
+then
 mkdir -p ${WORKSPACE}/keys/
 aptos genesis set-validator-configuration \
     --local-repository-dir $WORKSPACE \
@@ -95,8 +95,7 @@ fi
 
 if ! [ -f ${WORKSPACE}/framework.mrb ]
 then
-   curl https://github.com/aptos-labs/aptos-core/releases/download/aptos-framework-v0.3.0/framework.mrb --output framework.mrb
-   #curl https://raw.githubusercontent.com/aptos-labs/aptos-core/testnet/aptos-move/framework/releases/head.mrb --output framework.mrb
+        wget https://github.com/aptos-labs/aptos-core/releases/download/aptos-framework-v0.3.0/framework.mrb
 else
    echo "File framework.mrb Available"
 fi
@@ -114,7 +113,7 @@ docker-compose up -d
 
 function deploy:ait2(){
 if ! [ -f docker-compose.yaml ]
-then	
+then
   wget https://raw.githubusercontent.com/aptos-labs/aptos-core/main/docker/compose/aptos-node/docker-compose.yaml
 else
    echo "no avaialable"
@@ -132,7 +131,7 @@ then
 fi
 
 if ! [ -f "${WORKSPACE}/${NODENAME}.yaml" ]
-then	
+then
   aptos genesis set-validator-configuration \
     --keys-dir ${WORKSPACE} --local-repository-dir ${WORKSPACE} \
     --username ${NODENAME} \
@@ -253,33 +252,33 @@ docker-compose up -d
 
 case $OPTIONS in
    deploy|dep|apply|--deploy)
-	   case $BUILD in
-	      ait2)
-	      aptos:client;
-	      deploy:ait2;
-	      ;;
+           case $BUILD in
+              ait2)
+              aptos:client;
+              deploy:ait2;
+              ;;
               devnet)
-	      aptos:client;
-	      deploy:devnet;
-	      ;;
+              aptos:client;
+              deploy:devnet;
+              ;;
               testnet)
               aptos:client;
-	      deploy:testnet;
-	      ;;
+              deploy:testnet;
+              ;;
               *)
-	      help;
-	      ;;
+              help;
+              ;;
            esac
    ;;
    update|--update)
-	   case ${BUILD} in
+           case ${BUILD} in
            apots-client|client|--client)
            sudo rm -rf /usr/bin/aptos
            aptos:client;
-	   ;;
+           ;;
            *)
            help;
-	   ;;
+           ;;
            esac
    ;;
    *)
