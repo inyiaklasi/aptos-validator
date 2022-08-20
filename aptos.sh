@@ -4,7 +4,7 @@ source environment
 OPTIONS=$1
 BUILD=$2
 docker_compose="file"
-aptos_version_cli="0.3.0"
+aptos_version_cli="0.3.1"
 aptos_version_check=`aptos --version | awk '{print $2}'`
 
 mkdir -p $WORKSPACE
@@ -22,6 +22,7 @@ function aptos:client(){
 if ! [ -f /usr/bin/aptos ]
 then
  wget -qO aptos-cli.zip https://github.com/aptos-labs/aptos-core/releases/download/aptos-cli-v${aptos_version_cli}/aptos-cli-${aptos_version_cli}-Ubuntu-x86_64.zip
+ #wget -qO aptos-cli.zip https://github.com/aptos-labs/aptos-core/releases/download/aptos-cli-v${aptos_version_cli}/aptos-cli-${aptos_version_cli}-Ubuntu-x86_64.zip
  sudo unzip -o aptos-cli.zip -d /usr/bin
  sudo chmod +x /usr/bin/aptos
  rm aptos-cli.zip
@@ -30,16 +31,6 @@ fi
 }
 
 function deploy:testnet(){
-if [ ${aptos_version_check} != "0.3.0" ] || [ ${aptos_version_check} == "" ] || [ -z ${aptos_version_check} ]
-then
-          echo "make sure your aptos client tools have 0.3.0  version"
-	  echo "install aptos client with:"
-	  echo "bash -x aptos.sh update client"
-          exit 1;
-else
-         aptos:client;
-fi
-
 
 mkdir -p ${WORKSPACE}/keys
 if ! [ -f docker-compose.yaml ]
@@ -55,15 +46,15 @@ fi
 
 if ! [ -f "${WORKSPACE}/keys/public-keys.yaml" ] && ! [ -f "${WORKSPACE}/keys/private-keys.yaml" ] && ! [ -f "${WORKSPACE}/keys/validator-identity.yaml" ] && ! [ -f "${WORKSPACE}/keys/validator-full-node-identity.yaml" ]
 then
-   if [ ${aptos_version_check} != "0.3.0" ]
+   if [ ${aptos_version_check} == "0.3.1" ]
    then
-	  echo "make sure your aptos client tools have 0.3.0  version"
-	  exit 1;
+	   aptos genesis generate-keys --output-dir $WORKSPACE/keys
    elif [ ${aptos_version_check} == "" ] or [ -z ${aptos_version_check} ] 
    then
          aptos:client;
    else
-	 aptos genesis generate-keys --output-dir $WORKSPACE/keys
+	  echo "make sure your aptos client tools have 0.3.0  version"
+	  exit 1;
    fi
 fi
 
@@ -80,23 +71,23 @@ fi
 
 if ! [ -f $WORKSPACE/layout.yaml ]
 then
-aptos genesis generate-layout-template --output-file $WORKSPACE/layout.yaml
-#cat > $WORKSPACE/layout.yaml <<EOF
-#root_key: "D04470F43AB6AEAA4EB616B72128881EEF77346F2075FFE68E14BA7DEBD8095E"
-#users: ["${NODENAME}"]
-#chain_id: 43
-#allow_new_validators: false
-#epoch_duration_secs: 7200
-#is_test: true
-#min_stake: 100000000000000
-#min_voting_threshold: 100000000000000
-#max_stake: 100000000000000000
-#recurring_lockup_duration_secs: 86400
-#required_proposer_stake: 100000000000000
-#rewards_apy_percentage: 10
-#voting_duration_secs: 43200
-#voting_power_increase_limit: 20
-#EOF
+#aptos genesis generate-layout-template --output-file $WORKSPACE/layout.yaml
+cat > $WORKSPACE/layout.yaml <<EOF
+root_key: "D04470F43AB6AEAA4EB616B72128881EEF77346F2075FFE68E14BA7DEBD8095E"
+users: ["${NODENAME}"]
+chain_id: 43
+allow_new_validators: false
+epoch_duration_secs: 7200
+is_test: true
+min_stake: 100000000000000
+min_voting_threshold: 100000000000000
+max_stake: 100000000000000000
+recurring_lockup_duration_secs: 86400
+required_proposer_stake: 100000000000000
+rewards_apy_percentage: 10
+voting_duration_secs: 43200
+voting_power_increase_limit: 20
+EOF
 else
   echo "File layout.yaml from generation generate-layout-template available"
 fi 
@@ -104,15 +95,16 @@ fi
 
 if ! [ -f ${WORKSPACE}/framework.mrb ]
 then
-   curl https://raw.githubusercontent.com/aptos-labs/aptos-core/testnet/aptos-move/framework/releases/head.mrb --output framework.mrb
+   curl https://github.com/aptos-labs/aptos-core/releases/download/aptos-framework-v0.3.0/framework.mrb --output framework.mrb
+   #curl https://raw.githubusercontent.com/aptos-labs/aptos-core/testnet/aptos-move/framework/releases/head.mrb --output framework.mrb
 else
    echo "File framework.mrb Available"
 fi
 
 if ! [ -f ${WORKSPACE}/genesis.blob ] || ! [ -f ${WORKSPACE}/waypoint.txt ]
 then
-   rm ${WORKSPACE}/genesis.blob 2> /dev/nul
-   rm ${WORKSPACE}/waypoint.txt 2> /dev/nul
+   sudo rm ${WORKSPACE}/genesis.blob 2> /dev/nul
+   sudo rm ${WORKSPACE}/waypoint.txt 2> /dev/nul
    aptos genesis generate-genesis --local-repository-dir $WORKSPACE --output-dir $WORKSPACE
 else
    echo "Genesis File waypoint.txt and genesis.blob already exist"
