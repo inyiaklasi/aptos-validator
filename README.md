@@ -41,7 +41,7 @@ systemctl status docker
 change variable in file environment
 ```
 #!/usr/bin/env
-export BUILD="devnet"
+export BUILD="testnet"
 export WORKSPACE="${HOME}/APTOS/${BUILD}"
 export DNSNAME=""
 export NODENAME=""
