@@ -70,3 +70,13 @@ bash -x aptos.sh deploy testnet
 ```
 bash aptosh.sh update client
 ```
+
+
+## Install monitoring 
+
+```
+su -
+monitoring-stack deploy prometheus
+monitoring-stack deploy grafana
+
+```
