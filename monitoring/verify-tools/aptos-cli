@@ -17,18 +17,18 @@ echo "Then script starts now..."
 echo ""
 sleep 1
 count=0
-sync=$(curl 10.8.0.3:9101/metrics 2> /dev/null | grep "aptos_state_sync_version")
+sync=$(curl 127.0.0.1:9101/metrics 2> /dev/null | grep "aptos_state_sync_version")
 sync=$(echo "$sync"|sed -n -e '5p')
 sync3=$(echo $sync | grep -o '[0-9]*')
 echo "Syncing Progress"
 echo "================================"
 echo "$sync"
 sleep 2
-sync2=$(curl 10.8.0.3:9101/metrics 2> /dev/null | grep "aptos_state_sync_version")
+sync2=$(curl 127.0.0.1:9101/metrics 2> /dev/null | grep "aptos_state_sync_version")
 sync2=$(echo "$sync2"|sed -n -e '5p')
 sync4=$(echo $sync2 | grep -o '[0-9]*')
 echo "$sync2"
-epoch=$(curl 10.8.0.3:9101/metrics 2> /dev/null | grep "aptos_state_sync_version")
+epoch=$(curl 127.0.0.1:9101/metrics 2> /dev/null | grep "aptos_state_sync_version")
 epoch=$(echo "$epoch"|sed -n -e '6p')
 echo "$epoch"
 echo "================================"
@@ -40,14 +40,14 @@ else
     echo ">>>> Not ok!! <<<<"
 fi
 echo ""
-highest=$(curl 10.8.0.3:9101/metrics 2> /dev/null | grep "highest")
+highest=$(curl 127.0.0.1:9101/metrics 2> /dev/null | grep "highest")
 highest=$(echo "$highest"|sed -n -e '5p')
 highest2=$(echo $highest | grep -o '[0-9]*')
 echo "Syncing Speed"
 echo "================================"
 echo "$highest"
 sleep 2
-sync2=$(curl 10.8.0.3:9101/metrics 2> /dev/null | grep "aptos_state_sync_version")
+sync2=$(curl 127.0.0.1:9101/metrics 2> /dev/null | grep "aptos_state_sync_version")
 sync2=$(echo "$sync2"|sed -n -e '5p')
 sync4=$(echo $sync2 | grep -o '[0-9]*')
 echo "$sync2"
@@ -64,7 +64,7 @@ else
     fi
 fi
 echo ""
-in=$(curl 10.8.0.3:9101/metrics 2> /dev/null | grep "inbound")
+in=$(curl 127.0.0.1:9101/metrics 2> /dev/null | grep "inbound")
 in=$(echo "$in"|sed -n -e '1p')
 in3=$(echo $in | grep -o '[0-9]*')
 export in4=$(echo "${in3:(-2)}")
@@ -84,7 +84,7 @@ else
     fi
 fi
 echo ""
-out=$(curl 10.8.0.3:9101/metrics 2> /dev/null | grep "outbound")
+out=$(curl 127.0.0.1:9101/metrics 2> /dev/null | grep "outbound")
 out=$(echo "$out"|sed -n -e '1p')
 out3=$(echo $out | grep -o '[0-9]*')
 export out4=$(echo "${out3:(-2)}")
@@ -104,14 +104,14 @@ else
     fi
 fi
 echo ""
-v1=$(curl 10.8.0.3:9101/metrics 2> /dev/null | grep "aptos_consensus_vote_nil_count")
+v1=$(curl 127.0.0.1:9101/metrics 2> /dev/null | grep "aptos_consensus_vote_nil_count")
 v1=$(echo "$v1"|sed -n -e '3p')
 v3=$(echo $v1 | grep -o '[0-9]*')
 echo "Voting Progress"
 echo "================================"
 echo "$v1"
 sleep 4
-v5=$(curl 10.8.0.3:9101/metrics 2> /dev/null | grep "aptos_consensus_vote_nil_count")
+v5=$(curl 127.0.0.1:9101/metrics 2> /dev/null | grep "aptos_consensus_vote_nil_count")
 v5=$(echo "$v5"|sed -n -e '3p')
 v6=$(echo $v5 | grep -o '[0-9]*')
 echo "$v5"
@@ -130,14 +130,14 @@ else
 fi
 echo ""
 sleep 2
-r1=$(curl 10.8.0.3:9101/metrics 2> /dev/null | grep "aptos_consensus_current_round")
+r1=$(curl 127.0.0.1:9101/metrics 2> /dev/null | grep "aptos_consensus_current_round")
 r1=$(echo "$r1"|sed -n -e '3p')
 r3=$(echo $r1 | grep -o '[0-9]*')
 echo "Consensus Round Progess"
 echo "================================"
 echo "$r1"
 sleep 2
-r5=$(curl 10.8.0.3:9101/metrics 2> /dev/null | grep "aptos_consensus_current_round")
+r5=$(curl 127.0.0.1:9101/metrics 2> /dev/null | grep "aptos_consensus_current_round")
 r5=$(echo "$r5"|sed -n -e '3p')
 r6=$(echo $r5 | grep -o '[0-9]*')
 echo "$r5"
@@ -175,14 +175,14 @@ fi
 
 echo ""
 sleep 2
-tps=$(curl 10.8.0.3:9101/metrics 2> /dev/null | grep "aptos_consensus_last_committed_version")
+tps=$(curl 127.0.0.1:9101/metrics 2> /dev/null | grep "aptos_consensus_last_committed_version")
 tps=$(echo "$tps"|sed -n -e '3p')
 tps3=$(echo $tps | grep -o '[0-9]*')
 echo "Transaction Speed"
 echo "================================"
 echo "$tps"
 sleep 5
-tps2=$(curl 10.8.0.3:9101/metrics 2> /dev/null | grep "aptos_consensus_last_committed_version")
+tps2=$(curl 127.0.0.1:9101/metrics 2> /dev/null | grep "aptos_consensus_last_committed_version")
 tps2=$(echo "$tps2"|sed -n -e '3p')
 tps4=$(echo $tps2 | grep -o '[0-9]*')
 echo "$tps2"
