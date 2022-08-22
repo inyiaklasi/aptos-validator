@@ -49,7 +49,7 @@ then
    if [ ${aptos_version_check} == ${aptos_version_cli} ]
    then
 	 aptos genesis generate-keys --output-dir $WORKSPACE/keys
-   elif [ ${aptos_version_check} == "" ] or [ -z ${aptos_version_check} ] 
+   elif [ ${aptos_version_check} == "" ] 2> /dev/null or [ -z ${aptos_version_check} ] 2> /dev/null
    then
          aptos:client;
    else
