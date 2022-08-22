@@ -5,7 +5,7 @@ OPTIONS=$1
 BUILD=$2
 docker_compose="file"
 aptos_version_cli="0.3.1"
-aptos_version_check=`aptos --version | awk '{print $2}'| awk -F"." '{print $1"."$2}'`
+aptos_version_check=`aptos --version | awk '{print $2}'`
 
 mkdir -p $WORKSPACE
 cd $WORKSPACE
@@ -30,7 +30,7 @@ fi
 }
 
 function deploy:testnet(){
-aptos_version_cli=`echo $aptos_version_cli | awk '{print $2}'| awk -F"." '{print $1"."$2}'` 
+
 
 mkdir -p ${WORKSPACE}/keys
 if ! [ -f docker-compose.yaml ]
@@ -53,7 +53,7 @@ then
    then
          aptos:client;
    else
-	  echo "make sure your aptos client tools have 0.3.0  version"
+	  echo "make sure your aptos client tools have 0.3.1  version"
 	  exit 1;
    fi
 fi
