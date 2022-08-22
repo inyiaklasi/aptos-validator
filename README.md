@@ -80,3 +80,13 @@ monitoring-stack deploy prometheus
 monitoring-stack deploy grafana
 
 ```
+
+## Install NHC
+```
+bash nhc.sh start
+```
+
+Notes: if you running fullnode change variable *KINDNODE* to fullnode
+```
+KINDNODE="fullnode" 
+```
