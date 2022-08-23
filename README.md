@@ -9,7 +9,7 @@ Used DNS
 
 ## Install Environment
 ```
-git clone git@github.com:luneareth/aptos-validator.git
+git clone https://github.com/inyiaklasi/aptos-validator.git
 mv aptos-validator APTOS
 cd APTOS/bin
 ```
