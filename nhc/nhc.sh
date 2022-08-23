@@ -2,7 +2,7 @@
 
 
 CONFYAML="inyiaklasi-aptos-checker"
-CONFYAMLPRETTY="Inyiaklasi Aptos Nodes"
+CONFYAMLPRETTY="inyiaklasi Aptos Nodes"
 KINDNODE="validator" #validator or fullnode
 URL="http://inyiaklasi.duckdns.org/"
 CHAINID=43
