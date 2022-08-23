@@ -23,5 +23,5 @@ scrape_configs:
   - job_name: "Testnet"
     metrics_path: '/metrics'
     static_configs:
-            - targets: ["testnet-02.roomit.xyz:9100"]
+            - targets: ["inyiaklasi.duckdns.org:9100"]
 
