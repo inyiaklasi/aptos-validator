@@ -42,7 +42,7 @@ change variable in file environment
 ```
 #!/usr/bin/env
 export BUILD="testnet"
-export WORKSPACE="${HOME}/APTOS/${BUILD}"
+export WORKSPACE="${HOME}/APTOS/projects/${BUILD}"
 export DNSNAME=""
 export NODENAME=""
 ```
