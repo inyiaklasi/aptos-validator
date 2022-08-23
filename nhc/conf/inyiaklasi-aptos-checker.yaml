@@ -1,11 +1,11 @@
 ---
 node_address:
-  url: "http://cikuray.roomit.xyz/"
+  url: "http://inyiaklasi.duckdns.org/"
   metrics_port: 9101
   api_port: 8080
   noise_port: 6180
-configuration_name: roomit-aptos-checker
-configuration_name_pretty: RoomIT Aptos Nodes
+configuration_name: inyiaklasi-aptos-checker
+configuration_name_pretty: Inyiaklasi Aptos Nodes
 chain_id: 43
 role_type: validator
 evaluators:
