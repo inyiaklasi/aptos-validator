@@ -162,7 +162,7 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "expr": "cpu_usage_idle{host=\"testnet-02\",cpu=\"cpu-total\"}",
+          "expr": "cpu_usage_idle{host=\"instance-20220819-2351\",cpu=\"cpu-total\"}",
           "refId": "A"
         }
       ],
@@ -224,7 +224,7 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "expr": "cpu_usage_user{host=\"testnet-02\",cpu=\"cpu-total\"}",
+          "expr": "cpu_usage_user{host=\"instance-20220819-2351\",cpu=\"cpu-total\"}",
           "refId": "A"
         }
       ],
@@ -286,7 +286,7 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "expr": "cpu_usage_system{host=\"testnet-02\",cpu=\"cpu-total\"}",
+          "expr": "cpu_usage_system{host=\"instance-20220819-2351\",cpu=\"cpu-total\"}",
           "refId": "A"
         }
       ],
@@ -344,7 +344,7 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "expr": "mem_available_percent{host=\"testnet-02\"}",
+          "expr": "mem_available_percent{host=\"instance-20220819-2351\"}",
           "refId": "A"
         }
       ],
@@ -411,7 +411,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "{host=\"testnet-02.roomit.xyz\"}"
+              "options": "{host=\"inyiaklasi.duckdns.org\"}"
             },
             "properties": [
               {
@@ -448,7 +448,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "sum by(host) (cpu_usage_system{host=\"testnet-02\", cpu=\"cpu-total\"})",
+          "expr": "sum by(host) (cpu_usage_system{host=\"instance-20220819-2351\", cpu=\"cpu-total\"})",
           "range": true,
           "refId": "A"
         }
@@ -513,7 +513,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "{host=\"testnet-02.roomit.xyz\"}"
+              "options": "{host=\"inyiaklasi.duckdns.org\"}"
             },
             "properties": [
               {
@@ -550,7 +550,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "sum by(host) (cpu_usage_idle{host=\"testnet-02\", cpu=\"cpu-total\"})",
+          "expr": "sum by(host) (cpu_usage_idle{host=\"instance-20220819-2351\", cpu=\"cpu-total\"})",
           "range": true,
           "refId": "A"
         }
@@ -615,7 +615,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "{host=\"testnet-02.roomit.xyz\"}"
+              "options": "{host=\"inyiaklasi.duckdns.org\"}"
             },
             "properties": [
               {
@@ -652,7 +652,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "sum by(host) (cpu_usage_system{host=\"testnet-02\", cpu=\"cpu-total\"})",
+          "expr": "sum by(host) (cpu_usage_system{host=\"instance-20220819-2351\", cpu=\"cpu-total\"})",
           "range": true,
           "refId": "A"
         }
@@ -689,7 +689,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "{host=\"testnet-02.roomit.xyz\"}"
+              "options": "{host=\"inyiaklasi.duckdns.org\"}"
             },
             "properties": [
               {
@@ -729,7 +729,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "sum by(container_name) (docker_container_cpu_usage_percent{container_name=\"aptos-roomit\"})",
+          "expr": "sum by(container_name) (docker_container_cpu_usage_percent{container_name=\"testnet-validator-1\"})",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -795,7 +795,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "{host=\"testnet-02.roomit.xyz\"}"
+              "options": "{host=\"inyiaklasi.duckdns.org\"}"
             },
             "properties": [
               {
@@ -848,7 +848,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "sum by(container_name) (docker_container_cpu_usage_percent{container_name=\"aptos-roomit\"})",
+          "expr": "sum by(container_name) (docker_container_cpu_usage_percent{container_name=\"testnet-validator-1\"})",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -886,7 +886,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "{host=\"testnet-02.roomit.xyz\"}"
+              "options": "{host=\"inyiaklasi.duckdns.org\"}"
             },
             "properties": [
               {
@@ -924,7 +924,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "sum by(container_name) (docker_container_mem_usage_percent{container_name=\"aptos-roomit\"})",
+          "expr": "sum by(container_name) (docker_container_mem_usage_percent{container_name=\"testnet-validator-1\"})",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -990,7 +990,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "{host=\"testnet-02.roomit.xyz\"}"
+              "options": "{host=\"inyiaklasi.duckdns.org\"}"
             },
             "properties": [
               {
@@ -1043,7 +1043,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "sum by(container_name) (docker_container_mem_usage_percent{container_name=\"aptos-roomit\"})",
+          "expr": "sum by(container_name) (docker_container_mem_usage_percent{container_name=\"testnet-validator-1\"})",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -1110,7 +1110,7 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "/^aptos_data_client_highest_advertised_data\\{data_type=\"transaction_outputs\", instance=\"testnet\\-02\\.roomit\\.xyz:9101\", job=\"Testnet\"\\}$/",
+          "fields": "/^aptos_data_client_highest_advertised_data\\{data_type=\"transaction_outputs\", instance=\"inyiaklasi\\.duckdns\\.org:9101\\", job=\"Testnet\"\\}$/",
           "values": false
         },
         "text": {
@@ -1247,7 +1247,7 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "/^\\{instance=\"testnet\\-02\\.roomit\\.xyz:9101\", job=\"Testnet\"\\}$/",
+          "fields": "/^\\{instance=\"inyiaklasi\\.duckdns\\.org:9101\\", job=\"Testnet\"\\}$/",
           "values": false
         },
         "showThresholdLabels": false,
@@ -1395,7 +1395,7 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "/^aptos_consensus_proposals_count\\{instance=\"testnet\\-02\\.roomit\\.xyz:9101\", job=\"Testnet\"\\}$/",
+          "fields": "/^aptos_consensus_proposals_count\\{instance=\"inyiaklasi\\.duckdns\\.org:9101\\", job=\"Testnet\"\\}$/",
           "values": false
         },
         "showThresholdLabels": false,
@@ -1476,7 +1476,7 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "/^\\{instance=\"testnet\\-02\\.roomit\\.xyz:9101\", job=\"Testnet\"\\}$/",
+          "fields": "/^\\{instance=\"inyiaklasi\\.duckdns\\.org:9101\\", job=\"Testnet\"\\}$/",
           "values": false
         },
         "showThresholdLabels": false,
@@ -1848,7 +1848,7 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "/^\\{__name__=\"aptos_connections\", direction=\"inbound\", instance=\"testnet\\-02\\.roomit\\.xyz:9101\", job=\"Testnet\", network_id=\"Validator\", peer_id=\"34c05a76\", role_type=\"validator\"\\}$/",
+          "fields": "/^\\{__name__=\"aptos_connections\", direction=\"inbound\", instance=\"inyiaklasi\\.duckdns\\.org:9101\\", job=\"Testnet\", network_id=\"Validator\", peer_id=\"34c05a76\", role_type=\"validator\"\\}$/",
           "values": false
         },
         "text": {
@@ -2027,7 +2027,7 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "/^\\{__name__=\"aptos_connections\", direction=\"outbound\", instance=\"testnet\\-02\\.roomit\\.xyz:9101\", job=\"Testnet\", network_id=\"Validator\", peer_id=\"34c05a76\", role_type=\"validator\"\\}$/",
+          "fields": "/^\\{__name__=\"aptos_connections\", direction=\"outbound\", instance=\"inyiaklasi\\.duckdns\\.org:9101\\", job=\"Testnet\", network_id=\"Validator\", peer_id=\"34c05a76\", role_type=\"validator\"\\}$/",
           "values": false
         },
         "text": {
@@ -2188,7 +2188,7 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "/^\\{instance=\"testnet\\-02\\.roomit\\.xyz:9101\", job=\"Testnet\"\\}$/",
+          "fields": "/^\\{instance=\"inyiaklasi\\.duckdns\\.org:9101\\", job=\"Testnet\"\\}$/",
           "values": false
         },
         "showThresholdLabels": false,
@@ -2269,7 +2269,7 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "/^\\{instance=\"testnet\\-02\\.roomit\\.xyz:9101\", job=\"Testnet\"\\}$/",
+          "fields": "/^\\{instance=\"inyiaklasi\\.duckdns\\.org:9101\\", job=\"Testnet\"\\}$/",
           "values": false
         },
         "showThresholdLabels": false,
@@ -4028,7 +4028,7 @@
     ]
   },
   "timezone": "",
-  "title": "RoomIT | Aptos Validator",
+  "title": "Inyiaklasi | Aptos Validator",
   "uid": "MRrUCr9nz",
   "version": 51,
   "weekStart": ""
